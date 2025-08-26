@@ -11,10 +11,6 @@ public class Product {
         this.stock = stock;
     }
 
-    public void cutStock(int quantity) {
-        stock -= quantity;
-    }
-
     public String getName() {
         return name;
     }
@@ -29,5 +25,26 @@ public class Product {
     }
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void cutStock(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+        if (stock < quantity) {
+            throw new InsufficientException(name, stock, quantity);
+        }
+        stock -= quantity;
+    }
+
+    public boolean isHasStock(int quantity) {
+        return quantity >= 0 && stock >= quantity;
+    }
+    
+    public void addStock(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+        stock += quantity;
     }
 }
